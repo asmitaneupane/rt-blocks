@@ -52,6 +52,10 @@
     "postsPerPage": {
       "type": "number",
       "default": 3
+    },
+    "showControls": {
+      "type": "boolean",
+      "default": true
     }
   },
   "textdomain": "rt-blocks",

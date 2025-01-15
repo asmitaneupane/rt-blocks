@@ -27,6 +27,7 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 			newTab,
 			noFollow,
 			postsPerPage,
+			showControls,
 		},
 		setAttributes,
 	} = props;
@@ -125,6 +126,13 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 						step={500}
 					/>
 				)}
+				<ToggleControl
+					label={__("Show Controls", "rt-blocks")}
+					checked={showControls}
+					onChange={() =>
+						setAttributes({ showControls: !showControls })
+					}
+				/>
 			</PanelBody>
 		</WPInspectorControls>
 	);

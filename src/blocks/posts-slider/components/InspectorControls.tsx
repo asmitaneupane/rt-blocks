@@ -5,6 +5,7 @@ import {
 	ToggleControl,
 	BaseControl,
 	RangeControl,
+	TextControl,
 	SelectControl,
 } from "@wordpress/components";
 import React from "react";
@@ -37,51 +38,34 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 				title={__("General", "rt-blocks")}
 				className="rt-panel-body"
 			>
-				<BaseControl
+				<TextControl
+					value={apiUrl}
+					onChange={(value) => setAttributes({ apiUrl: value })}
+					className="rt-input-text"
 					label={__("API Url", "rt-blocks")}
-					className="rt-base-control"
-				>
-					<input
-						value={apiUrl}
-						onChange={(value) => setAttributes({ apiUrl: value })}
-						className="rt-input-text"
-					/>
-					<p
-						style={{
-							fontStyle: "italic",
-							textWrap: "wrap",
-							color: "#d7d7d7",
-						}}
-					>
-						{__(
-							"Note: wp-json/wp/v2/posts will be append automatically.",
-							"rt-blocks",
-						)}
-					</p>
-					{apiUrl && (
-						<>
-							<ToggleControl
-								checked={newTab ?? false}
-								onChange={() =>
-									setAttributes({ newTab: !newTab })
-								}
-								label={__(
-									"Open Link in a New Tab",
-									"rt-blocks",
-								)}
-								className="rt-toggle-control"
-							/>
-							<ToggleControl
-								checked={noFollow ?? false}
-								onChange={() =>
-									setAttributes({ noFollow: !noFollow })
-								}
-								label={__("Nofollow Link", "rt-blocks")}
-								className="rt-toggle-control"
-							/>
-						</>
+					help={__(
+						"Note: wp-json/wp/v2/posts will be append automatically.",
+						"rt-blocks",
 					)}
-				</BaseControl>
+				/>
+				{apiUrl && (
+					<>
+						<ToggleControl
+							checked={newTab ?? false}
+							onChange={() => setAttributes({ newTab: !newTab })}
+							label={__("Open Link in a New Tab", "rt-blocks")}
+							className="rt-toggle-control"
+						/>
+						<ToggleControl
+							checked={noFollow ?? false}
+							onChange={() =>
+								setAttributes({ noFollow: !noFollow })
+							}
+							label={__("Nofollow Link", "rt-blocks")}
+							className="rt-toggle-control"
+						/>
+					</>
+				)}
 				<SelectControl
 					label={__("Per View", "rt-blocks")}
 					value={perView}

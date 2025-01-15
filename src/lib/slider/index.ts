@@ -41,6 +41,7 @@ class Slider {
 			.matchMedia("(max-width: 768px)")
 			.addEventListener("change", (e) => {
 				this.isMobile = e.matches;
+				this.init();
 			});
 	}
 

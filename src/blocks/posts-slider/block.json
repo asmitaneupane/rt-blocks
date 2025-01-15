@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "rtb/posts-slider",
+  "version": "0.1.0",
+  "title": "Posts slider",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Posts slider.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "align": true,
+    "alignWide": true,
+    "anchor": true,
+    "background": {
+      "backgroundImage": true,
+      "backgroundSize": true
+    },
+    "className": false,
+    "shadow": true,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "apiUrl": {
+      "type": "string",
+      "default": "https://wptavern.com/wp-json/wp/v2/posts"
+    },
+    "showTitle": {
+      "type": "boolean",
+      "default": true
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableAutoPlay": {
+      "type": "boolean",
+      "default": false
+    },
+    "autoScrollInterval": {
+      "type": "number",
+      "default": 5000
+    },
+    "postsPerPage": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "textdomain": "rt-blocks",
+  "editorScript": "rt-blocks",
+  "editorStyle": "rt-blocks",
+  "style": "rt-blocks-style",
+  "viewScript": [
+    "rt-posts-slider"
+  ]
+}

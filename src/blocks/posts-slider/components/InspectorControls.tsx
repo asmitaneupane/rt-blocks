@@ -42,7 +42,6 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 					className="rt-base-control"
 				>
 					<div className="url-input-wrapper">
-						//@ts-ignore
 						<WPURLInput
 							value={apiUrl}
 							onChange={(value) =>

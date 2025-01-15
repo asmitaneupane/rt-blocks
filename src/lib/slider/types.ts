@@ -1,9 +1,11 @@
 export type Config = {
 	perView: number;
+	postsPerPage: number;
+	showControls?: boolean;
 	gap: number;
 	breakpoints?: Record<number, Omit<Config, "breakpoints">>;
 	showTitle?: boolean;
-	showDate?: boolean;
+	showUpdatedDate?: boolean;
 	showExcerpt?: boolean;
 	enableAutoPlay?: boolean;
 	autoScrollInterval?: number;

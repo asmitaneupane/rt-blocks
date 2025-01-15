@@ -2,11 +2,12 @@ import type { Config, State } from "./types";
 import "./index.scss";
 
 const DEFAULT_CONFIG = {
-	perView: 4,
+	perView: 3,
 	gap: 20,
 	showTitle: true,
-	showDate: true,
+	showUpdatedDate: true,
 	showExcerpt: true,
+	showControls: true,
 	enableAutoPlay: false,
 	autoScrollInterval: 3000,
 	newTab: false,
@@ -24,6 +25,8 @@ class Slider {
 	} = {};
 	private state: State;
 	private element: HTMLElement;
+	private autoPlayInterval?: number;
+	private isMobile = false;
 
 	constructor(element: HTMLElement) {
 		this.element = element;
@@ -33,6 +36,12 @@ class Slider {
 		this.onClick = this.onClick.bind(this);
 		this.onNextClick = this.onNextClick.bind(this);
 		this.onPrevClick = this.onPrevClick.bind(this);
+		this.isMobile = window.matchMedia("(max-width: 768px)").matches;
+		window
+			.matchMedia("(max-width: 768px)")
+			.addEventListener("change", (e) => {
+				this.isMobile = e.matches;
+			});
 	}
 
 	private validateElements() {
@@ -69,10 +78,28 @@ class Slider {
 	public mount() {
 		this.init();
 		this.addEventListeners();
+		this.setupAutoPlay();
 	}
 
 	public unmount() {
 		this.removeEventListeners();
+		this.stopAutoPlay();
+	}
+
+	private setupAutoPlay() {
+		if (this.config.enableAutoPlay) {
+			this.autoPlayInterval = window.setInterval(() => {
+				if (!this.state.dragging) {
+					this.next();
+				}
+			}, this.config.autoScrollInterval);
+		}
+	}
+
+	private stopAutoPlay() {
+		if (this.autoPlayInterval) {
+			clearInterval(this.autoPlayInterval);
+		}
 	}
 
 	private addEventListeners() {
@@ -88,8 +115,11 @@ class Slider {
 		});
 		this.list.addEventListener("touchmove", this.onDrag, { passive: true });
 		this.list.addEventListener("click", this.onClick, true);
-		this.controls?.next?.addEventListener("click", this.onNextClick);
-		this.controls?.prev?.addEventListener("click", this.onPrevClick);
+
+		if (this.config.showControls) {
+			this.controls?.next?.addEventListener("click", this.onNextClick);
+			this.controls?.prev?.addEventListener("click", this.onPrevClick);
+		}
 	}
 
 	private removeEventListeners() {
@@ -101,8 +131,11 @@ class Slider {
 		this.list.removeEventListener("touchend", this.onDragEnd);
 		this.list.removeEventListener("touchmove", this.onDrag);
 		this.list.removeEventListener("click", this.onClick, true);
-		this.controls?.next?.removeEventListener("click", this.onNextClick);
-		this.controls?.prev?.removeEventListener("click", this.onPrevClick);
+
+		if (this.config.showControls) {
+			this.controls?.next?.removeEventListener("click", this.onNextClick);
+			this.controls?.prev?.removeEventListener("click", this.onPrevClick);
+		}
 	}
 
 	init() {
@@ -124,37 +157,66 @@ class Slider {
 		this.track = track;
 		this.list = list;
 		this.slides = slides;
-		this.controls.next = this.element.querySelector<HTMLElement>(
-			".rt-slider__control--next",
+
+		if (this.config.showControls) {
+			this.controls.next = this.element.querySelector<HTMLElement>(
+				".rt-slider__control--next",
+			);
+			this.controls.prev = this.element.querySelector<HTMLElement>(
+				".rt-slider__control--prev",
+			);
+		}
+
+		// Apply visibility classes based on config
+		this.element.classList.toggle("hide-title", !this.config.showTitle);
+		this.element.classList.toggle(
+			"hide-date",
+			!this.config.showUpdatedDate,
 		);
-		this.controls.prev = this.element.querySelector<HTMLElement>(
-			".rt-slider__control--prev",
+		this.element.classList.toggle("hide-excerpt", !this.config.showExcerpt);
+		this.element.classList.toggle(
+			"hide-controls",
+			!this.config.showControls,
 		);
+
 		this.calculateSlideWidth();
 		this.list.style.setProperty("--translate--x", `${this.state.x}px`);
 		this.list.style.setProperty("--gap", `${this.config.gap}px`);
+
 		for (let i = 0; i < this.slides.length; i++) {
 			this.slides[i]!.dataset.index = `${i}`;
 		}
+
+		if (this.config.newTab) {
+			this.element.querySelectorAll("a").forEach((link) => {
+				link.setAttribute("target", "_blank");
+			});
+		}
+
+		if (this.config.noFollow) {
+			this.element.querySelectorAll("a").forEach((link) => {
+				link.setAttribute("rel", "nofollow");
+			});
+		}
+
 		this.element.setAttribute("data-init", "true");
 	}
 
 	private calculateSlideWidth() {
-		const { perView, gap } = this.config;
 		const trackWidth = this.track.offsetWidth;
-		const slideWidth = trackWidth / perView;
+		const slideWidth = trackWidth / this.config.perView;
 		this.list.style.setProperty("--slide--width", `${slideWidth}px`);
 		return slideWidth;
 	}
 
 	private onClick(e: MouseEvent) {
-		if (this.state.isDragged) {
-			e.preventDefault();
-			e.stopPropagation();
-			setTimeout(() => {
-				this.state.isDragged = false;
-			}, 0);
-		}
+		// if (this.state.isDragged) {
+		// 	e.preventDefault();
+		// 	e.stopPropagation();
+		// 	setTimeout(() => {
+		// 		this.state.isDragged = false;
+		// 	}, 0);
+		// }
 	}
 
 	public next() {
@@ -270,7 +332,12 @@ class Slider {
 	}
 
 	private updateNavigationState() {
-		if (!this.controls?.next || !this.controls?.prev) return;
+		if (
+			!this.config.showControls ||
+			!this.controls?.next ||
+			!this.controls?.prev
+		)
+			return;
 		if (this.state.index === 0) {
 			this.controls.prev.setAttribute("disabled", "");
 		} else {

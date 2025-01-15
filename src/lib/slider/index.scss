@@ -18,6 +18,7 @@
 		transition-property: transform;
 		transition-timing-function: ease-in-out;
 		transition-duration: var(--transition--duration, 300ms);
+		margin-bottom: 10px;
 	}
 
 	&__slide {
@@ -25,10 +26,10 @@
 		width: var(--slide--width, 25%);
 		padding-right: var(--gap, 20px);
 		position: relative;
-		height: 550px;
+		height: 500px;
 
 		.rt-post {
-			height: 500px;
+			height: 495px;
 		}
 
 		* {

@@ -1,0 +1,35 @@
+{
+  "name": "rt-blocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "wp-scripts start",
+    "build": "wp-scripts build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee",
+  "devDependencies": {
+    "@types/react": "^19.0.3",
+    "@types/react-dom": "^19.0.2",
+    "@types/wordpress__block-editor": "^11.5.16",
+    "@types/wordpress__blocks": "^12.5.17",
+    "@wordpress/block-editor": "^14.10.1",
+    "@wordpress/blocks": "^14.4.1",
+    "@wordpress/components": "^29.1.1",
+    "@wordpress/i18n": "^5.15.1",
+    "@wordpress/scripts": "^30.8.1",
+    "@wordpress/server-side-render": "^5.15.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.17.0",
+    "fork-ts-checker-webpack-plugin": "^9.0.2",
+    "prettier": "^3.4.2",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2"
+  }
+}

@@ -7,7 +7,6 @@ import {
 	RangeControl,
 	SelectControl,
 } from "@wordpress/components";
-import { URLInput as WPURLInput } from "@wordpress/block-editor";
 import React from "react";
 
 type Props = {
@@ -20,14 +19,14 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 		attributes: {
 			apiUrl,
 			showTitle,
-			showDate,
+			showUpdatedDate,
 			showExcerpt,
 			enableAutoPlay,
 			autoScrollInterval,
 			newTab,
 			noFollow,
-			postsPerPage,
 			showControls,
+			perView,
 		},
 		setAttributes,
 	} = props;
@@ -42,16 +41,23 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 					label={__("API Url", "rt-blocks")}
 					className="rt-base-control"
 				>
-					<div className="url-input-wrapper">
-						<WPURLInput
-							value={apiUrl}
-							onChange={(value) =>
-								setAttributes({ apiUrl: value })
-							}
-							autoFocus={false}
-							disableSuggestions
-						/>
-					</div>
+					<input
+						value={apiUrl}
+						onChange={(value) => setAttributes({ apiUrl: value })}
+						className="rt-input-text"
+					/>
+					<p
+						style={{
+							fontStyle: "italic",
+							textWrap: "wrap",
+							color: "#d7d7d7",
+						}}
+					>
+						{__(
+							"Note: wp-json/wp/v2/posts will be append automatically.",
+							"rt-blocks",
+						)}
+					</p>
 					{apiUrl && (
 						<>
 							<ToggleControl
@@ -77,14 +83,13 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 					)}
 				</BaseControl>
 				<SelectControl
-					label={__("Posts Per Page", "rt-blocks")}
-					value={postsPerPage}
+					label={__("Per View", "rt-blocks")}
+					value={perView}
 					options={[
-						{ label: "1", value: "1" },
 						{ label: "2", value: "2" },
 						{ label: "3", value: "3" },
-						{ label: "4", value: "4" },
 					]}
+					onChange={(value) => setAttributes({ perView: value })}
 				/>
 				<ToggleControl
 					label={__("Show Title", "rt-blocks")}
@@ -94,8 +99,10 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 				/>
 				<ToggleControl
 					label={__("Show Date", "rt-blocks")}
-					checked={showDate}
-					onChange={() => setAttributes({ showDate: !showDate })}
+					checked={showUpdatedDate}
+					onChange={() =>
+						setAttributes({ showUpdatedDate: !showUpdatedDate })
+					}
 					className="rt-toggle-control"
 				/>
 				<ToggleControl
@@ -132,6 +139,7 @@ const InspectorControls: React.ComponentType<Props> = (props) => {
 					onChange={() =>
 						setAttributes({ showControls: !showControls })
 					}
+					className="rt-toggle-control"
 				/>
 			</PanelBody>
 		</WPInspectorControls>

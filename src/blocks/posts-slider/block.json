@@ -6,7 +6,7 @@
   "title": "Posts slider",
   "category": "widgets",
   "icon": "smiley",
-  "description": "Posts slider.",
+  "description": "Showcase your blog content in a dynamic and responsive format.",
   "example": {},
   "supports": {
     "html": false,
@@ -27,13 +27,21 @@
   "attributes": {
     "apiUrl": {
       "type": "string",
-      "default": "https://wptavern.com/wp-json/wp/v2/posts"
+      "default": "https://wptavern.com/"
+    },
+    "newTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "noFollow": {
+      "type": "boolean",
+      "default": false
     },
     "showTitle": {
       "type": "boolean",
       "default": true
     },
-    "showDate": {
+    "showUpdatedDate": {
       "type": "boolean",
       "default": true
     },
@@ -47,10 +55,10 @@
     },
     "autoScrollInterval": {
       "type": "number",
-      "default": 5000
+      "default": 3000
     },
-    "postsPerPage": {
-      "type": "number",
+    "perView": {
+      "type": "string",
       "default": 3
     },
     "showControls": {

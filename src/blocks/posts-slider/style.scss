@@ -6,13 +6,15 @@
 	.rt-base-control {
 		padding-top: 10px;
 
+		.rt-input-text {
+			border: 1px solid #949494;
+			width: 100%;
+			padding: 6px;
+			border-radius: 3px;
+		}
+
 		.url-input-wrapper {
 			position: relative;
-			overflow-x: scroll;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			max-width: 100%;
-			cursor: text;
 
 			input {
 				width: 100%;
@@ -72,6 +74,7 @@
 	&__meta {
 		display: flex;
 		padding-inline: 10px;
+		padding-top: 10px;
 		font-size: 14px;
 		font-family: "Times New Roman";
 		justify-content: space-between;
@@ -97,15 +100,158 @@
 		padding-inline: 10px;
 		padding-bottom: 10px;
 
-		.rt-post__read-more {
-			font-style: italic;
-			color: #383838;
-			font-weight: 600;
+		.rt-post {
+			&__read-more {
+				font-style: italic;
+				color: #383838;
+				font-weight: 600;
 
-			&:hover {
-				color: #0073e6;
+				&:hover {
+					color: #0073e6;
+				}
 			}
 		}
 	}
 
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+
+	.rt-slider {
+		&__slide {
+			height: 450px;
+
+			.rt-post {
+				height: 440px;
+			}
+		}
+	}
+}
+
+@media (max-width: 992px) {
+	.rt-panel-body {
+		.rt-base-control {
+			padding-top: 6px;
+		}
+	}
+
+	.rt-slider {
+		&__slide {
+			height: 335px;
+			width: 50%;
+
+			.rt-post {
+				height: 320px;
+
+				&__image {
+					max-height: 200px;
+				}
+
+				&__title {
+					font-size: 14px;
+				}
+
+				&__excerpt {
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.rt-panel-body {
+		>h2 {
+			font-size: 1.2rem;
+		}
+
+		.rt-base-control {
+			padding-top: 4px;
+		}
+	}
+
+	.rt-slider {
+		&__slide {
+			height: auto;
+
+			.rt-post {
+				height: 285px;
+
+				&__image {
+					max-height: 150px;
+					aspect-ratio: auto;
+				}
+
+			}
+		}
+	}
+}
+
+@media (max-width: 576px) {
+
+	.rt-panel-body {
+		>h2 {
+			font-size: 1rem;
+		}
+	}
+
+	.rt-slider {
+		&__slide {
+			width: 100%;
+			height: auto;
+
+			.rt-post {
+				height: 240px;
+
+				&__image {
+					max-height: 100px;
+				}
+
+				&__title {
+					font-size: 16px;
+				}
+
+				&__excerpt {
+					font-size: 14px;
+				}
+			}
+		}
+
+	}
+}
+
+@media (max-width: 360px) {
+	.rt-slider {
+
+		&__slide {
+
+			.rt-post {
+				&__title {
+					font-size: 13px;
+				}
+
+				&__excerpt {
+					font-size: 10px;
+				}
+
+				&__date {
+					font-size: 12px;
+				}
+
+				&__updated {
+					font-size: 12px;
+				}
+			}
+		}
+
+		&__controls {
+			.rt-slider {
+				&__control {
+					font-size: 12px;
+				}
+			}
+		}
+
+	}
 }
